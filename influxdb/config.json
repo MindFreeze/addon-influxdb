@@ -1,6 +1,6 @@
 {
   "name": "InfluxDB",
-  "version": "dev",
+  "version": "1.0.1",
   "slug": "influxdb",
   "description": "Scalable datastore for metrics, events, and real-time analytics",
   "url": "https://community.home-assistant.io/t/community-hass-io-add-on-influxdb/54491?u=frenck",
@@ -25,6 +25,11 @@
     "odroid-c2",
     "odroid-xu"
   ],
+  "apparmor": false,
+  "privileged": [
+    "SYS_ADMIN"
+  ],
+  "devices": ["/dev/sda1:/dev/sda1:rwm"],
   "map": [
     "config:rw",
     "share:rw",
