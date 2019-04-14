@@ -1,4 +1,4 @@
-ARG BUILD_FROM=hassioaddons/ubuntu-base:2.2.0
+ARG BUILD_FROM=hassioaddons/ubuntu-base:3.1.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -11,71 +11,46 @@ ARG BUILD_ARCH=amd64
 RUN \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-        dirmngr=2.2.4-1ubuntu1.1 \
-        gpg-agent=2.2.4-1ubuntu1.1 \
-        gpg=2.2.4-1ubuntu1.1 \
         libnginx-mod-http-lua=1.14.0-0ubuntu1.2 \
         luarocks=2.4.2+dfsg-1 \
         nginx=1.14.0-0ubuntu1.2 \
     \
-    && luarocks install lua-resty-http 0.12-0 \
-    \
-    && gpg \
-        --keyserver hkp://ha.pool.sks-keyservers.net:11371 \
-        --recv-keys "05CE15085FC09D18E99EFB22684A14CF2582E0C5" \
-    || gpg \
-        --keyserver ha.pool.sks-keyservers.net \
-        --recv-keys "05CE15085FC09D18E99EFB22684A14CF2582E0C5" \
-    || gpg \
-        --keyserver pgp.mit.edu \
-        --recv-keys "05CE15085FC09D18E99EFB22684A14CF2582E0C5" \
-    || gpg \
-        --keyserver keyserver.pgp.com \
-        --recv-keys "05CE15085FC09D18E99EFB22684A14CF2582E0C5" \
+    && luarocks install lua-resty-http 0.13-0 \
     \
     && ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
+    && if [ "${BUILD_ARCH}" = "armv7" ]; then ARCH="armhf"; fi \
     \
-    && INFLUXDB="1.7.2" \
-    && curl -J -L -o /tmp/influxdb.deb.asc \
-        "https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUXDB}_${ARCH}.deb.asc" \
+    && INFLUXDB="1.7.5" \
     && curl -J -L -o /tmp/influxdb.deb \
         "https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUXDB}_${ARCH}.deb" \
     \
-    && CHRONOGRAF="1.7.5" \
-    && curl -J -L -o /tmp/chronograf.deb.asc \
-        "https://dl.influxdata.com/chronograf/releases/chronograf_${CHRONOGRAF}_${ARCH}.deb.asc" \
+    && CHRONOGRAF="1.7.9" \
     && curl -J -L -o /tmp/chronograf.deb \
         "https://dl.influxdata.com/chronograf/releases/chronograf_${CHRONOGRAF}_${ARCH}.deb" \
     \
     && KAPACITOR="1.5.2" \
-    && curl -J -L -o /tmp/kapacitor.deb.asc \
-        "https://dl.influxdata.com/kapacitor/releases/kapacitor_${KAPACITOR}_${ARCH}.deb.asc" \
     && curl -J -L -o /tmp/kapacitor.deb \
         "https://dl.influxdata.com/kapacitor/releases/kapacitor_${KAPACITOR}_${ARCH}.deb" \
-    \
-    && gpg --batch --verify /tmp/influxdb.deb.asc /tmp/influxdb.deb \
-    && gpg --batch --verify /tmp/chronograf.deb.asc /tmp/chronograf.deb \
-    && gpg --batch --verify /tmp/kapacitor.deb.asc /tmp/kapacitor.deb \
     \
     && dpkg --install /tmp/influxdb.deb \
     && dpkg --install /tmp/chronograf.deb \
     && dpkg --install /tmp/kapacitor.deb \
     \
-    && apt-get purge -y --auto-remove \
-        dirmngr \
-        gpg \
-    \
     && rm -fr \
         /tmp/* \
-        /root/.gnupg \
+        /etc/nginx \
         /var/{cache,log}/* \
-        /var/lib/apt/lists/*
+        /var/lib/apt/lists/* \
+    \
+    && mkdir -p /var/log/nginx \
+    && touch /var/log/nginx/error.log
+
 
 # Copy root filesystem
 COPY rootfs /
 
-# Build arugments
+# Build arguments
 ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
