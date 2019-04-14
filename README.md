@@ -4,11 +4,16 @@
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
 
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports armhf Architecture][armhf-shield]
+![Supports armv7 Architecture][armv7-shield]
+![Supports i386 Architecture][i386-shield]
+
 [![GitLab CI][gitlabci-shield]][gitlabci]
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
 
-[![Bountysource][bountysource-shield]][bountysource]
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
@@ -41,32 +46,10 @@ comparison to installing any other Hass.io add-on.
 1. Install the "InfluxDB" add-on.
 1. Start the "InfluxDB" add-on.
 1. Check the logs of the "InfluxDB" to see if everything went well.
-1. You can log into the web interface using your Home Assistant credentials.
+1. Click the "OPEN WEB UI" button!
 
 **NOTE**: Do not add this repository to Hass.io, please use:
 `https://github.com/hassio-addons/repository`.
-
-## Docker status
-
-[![Docker Architecture][armhf-arch-shield]][armhf-dockerhub]
-[![Docker Version][armhf-version-shield]][armhf-microbadger]
-[![Docker Layers][armhf-layers-shield]][armhf-microbadger]
-[![Docker Pulls][armhf-pulls-shield]][armhf-dockerhub]
-
-[![Docker Architecture][aarch64-arch-shield]][aarch64-dockerhub]
-[![Docker Version][aarch64-version-shield]][aarch64-microbadger]
-[![Docker Layers][aarch64-layers-shield]][aarch64-microbadger]
-[![Docker Pulls][aarch64-pulls-shield]][aarch64-dockerhub]
-
-[![Docker Architecture][amd64-arch-shield]][amd64-dockerhub]
-[![Docker Version][amd64-version-shield]][amd64-microbadger]
-[![Docker Layers][amd64-layers-shield]][amd64-microbadger]
-[![Docker Pulls][amd64-pulls-shield]][amd64-dockerhub]
-
-[![Docker Architecture][i386-arch-shield]][i386-dockerhub]
-[![Docker Version][i386-version-shield]][i386-microbadger]
-[![Docker Layers][i386-layers-shield]][i386-microbadger]
-[![Docker Pulls][i386-pulls-shield]][i386-dockerhub]
 
 ## Configuration
 
@@ -78,6 +61,7 @@ Example add-on configuration:
 {
     "log_level": "info",
     "auth": true,
+    "reporting": true,
     "ssl": true,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem"
@@ -109,6 +93,12 @@ you are troubleshooting.
 Enable or disable InfluxDB user authentication.
 
 **Note**: _Turning this off is NOT recommended!_
+
+### Option: `reporting`
+
+This option allows you to disable the reporting of usage data to InfluxData.
+
+**Note**: _No data from user databases is ever transmitted!_
 
 ### Option: `ssl`
 
@@ -189,8 +179,6 @@ panel_iframe:
 
 ## Known issues and limitations
 
-- This add-on does support ARM-based devices, nevertheless, they must
-  at least be an ARMv7 device. (Raspberry Pi 1 and Zero is not supported).
 - While the Chronograph interface supports SSL, currently, the add-on does
   not support having SSL on InfluxDB. This limitation is caused by
   Chronograf and we are still looking into a proper solution for this.
@@ -252,7 +240,7 @@ our [GitHub Repository][repository].
 
 MIT License
 
-Copyright (c) 2018 Franck Nijhof
+Copyright (c) 2018-2019 Franck Nijhof
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -272,32 +260,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[aarch64-anchore-shield]: https://anchore.io/service/badges/image/67d1185473090e99d5ac5e1bb4d1aa2295117a9bd3d7abbf8cd8a71e331c8388
-[aarch64-anchore]: https://anchore.io/image/dockerhub/hassioaddons%2Finfluxdb-aarch64%3Alatest
-[aarch64-arch-shield]: https://img.shields.io/badge/architecture-aarch64-blue.svg
-[aarch64-dockerhub]: https://hub.docker.com/r/hassioaddons/influxdb-aarch64
-[aarch64-layers-shield]: https://images.microbadger.com/badges/image/hassioaddons/influxdb-aarch64.svg
-[aarch64-microbadger]: https://microbadger.com/images/hassioaddons/influxdb-aarch64
-[aarch64-pulls-shield]: https://img.shields.io/docker/pulls/hassioaddons/influxdb-aarch64.svg
-[aarch64-version-shield]: https://images.microbadger.com/badges/version/hassioaddons/influxdb-aarch64.svg
-[amd64-anchore-shield]: https://anchore.io/service/badges/image/031c3ec49491c191e22395ba19981eaaabb892802c6698af08c92bfc8319cdc0
-[amd64-anchore]: https://anchore.io/image/dockerhub/hassioaddons%2Finfluxdb-amd64%3Alatest
-[amd64-arch-shield]: https://img.shields.io/badge/architecture-amd64-blue.svg
-[amd64-dockerhub]: https://hub.docker.com/r/hassioaddons/influxdb-amd64
-[amd64-layers-shield]: https://images.microbadger.com/badges/image/hassioaddons/influxdb-amd64.svg
-[amd64-microbadger]: https://microbadger.com/images/hassioaddons/influxdb-amd64
-[amd64-pulls-shield]: https://img.shields.io/docker/pulls/hassioaddons/influxdb-amd64.svg
-[amd64-version-shield]: https://images.microbadger.com/badges/version/hassioaddons/influxdb-amd64.svg
-[armhf-anchore-shield]: https://anchore.io/service/badges/image/da56ee1d91a6b46756fcbf9d1bf2e90860a37ea992b57fa4627a8394b5fd239c
-[armhf-anchore]: https://anchore.io/image/dockerhub/hassioaddons%influxdb-armhf%3Alatest
-[armhf-arch-shield]: https://img.shields.io/badge/architecture-armhf-blue.svg
-[armhf-dockerhub]: https://hub.docker.com/r/hassioaddons/influxdb-armhf
-[armhf-layers-shield]: https://images.microbadger.com/badges/image/hassioaddons/influxdb-armhf.svg
-[armhf-microbadger]: https://microbadger.com/images/hassioaddons/influxdb-armhf
-[armhf-pulls-shield]: https://img.shields.io/docker/pulls/hassioaddons/influxdb-armhf.svg
-[armhf-version-shield]: https://images.microbadger.com/badges/version/hassioaddons/influxdb-armhf.svg
-[bountysource-shield]: https://img.shields.io/bountysource/team/hassio-addons/activity.svg
-[bountysource]: https://www.bountysource.com/teams/hassio-addons/issues
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-no-red.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/frenck
 [commits-shield]: https://img.shields.io/github/commit-activity/y/hassio-addons/addon-influxdb.svg
@@ -312,18 +278,11 @@ SOFTWARE.
 [gitlabci-shield]: https://gitlab.com/hassio-addons/addon-influxdb/badges/master/pipeline.svg
 [gitlabci]: https://gitlab.com/hassio-addons/addon-influxdb/pipelines
 [home-assistant]: https://home-assistant.io
-[i386-anchore-shield]: https://anchore.io/service/badges/image/4b740c5341d0c0aa373563eaf98f3b98655859ee2d5f4e1b226e7976162c9961
-[i386-anchore]: https://anchore.io/image/dockerhub/hassioaddons%2Finfluxdb-i386%3Alatest
-[i386-arch-shield]: https://img.shields.io/badge/architecture-i386-blue.svg
-[i386-dockerhub]: https://hub.docker.com/r/hassioaddons/influxdb-i386
-[i386-layers-shield]: https://images.microbadger.com/badges/image/hassioaddons/influxdb-i386.svg
-[i386-microbadger]: https://microbadger.com/images/hassioaddons/influxdb-i386
-[i386-pulls-shield]: https://img.shields.io/docker/pulls/hassioaddons/influxdb-i386.svg
-[i386-version-shield]: https://images.microbadger.com/badges/version/hassioaddons/influxdb-i386.svg
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [issue]: https://github.com/hassio-addons/addon-influxdb/issues
 [keepchangelog]: http://keepachangelog.com/en/1.0.0/
 [license-shield]: https://img.shields.io/github/license/hassio-addons/addon-influxdb.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2018.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
 [patreon-shield]: https://www.frenck.nl/images/patreon.png
 [patreon]: https://www.patreon.com/
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg

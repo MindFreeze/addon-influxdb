@@ -1,10 +1,11 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # ==============================================================================
 # Community Hass.io Add-ons: InfluxDB
 # Configures password for Kapacitor
 # ==============================================================================
-# shellcheck disable=SC1091
-source /usr/lib/hassio-addons/base.sh
+declare secret
 
-sed -i "s/password.*/password = \"${HASSIO_TOKEN}\"/" \
+secret=$(</data/secret)
+
+sed -i "s/password.*/password = \"${secret}\"/" \
     /etc/kapacitor/kapacitor.conf
