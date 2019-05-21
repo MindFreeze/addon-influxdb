@@ -1,4 +1,4 @@
-ARG BUILD_FROM=hassioaddons/ubuntu-base:3.1.0
+ARG BUILD_FROM=hassioaddons/ubuntu-base:3.1.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -21,11 +21,11 @@ RUN \
     && if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
     && if [ "${BUILD_ARCH}" = "armv7" ]; then ARCH="armhf"; fi \
     \
-    && INFLUXDB="1.7.5" \
+    && INFLUXDB="1.7.6" \
     && curl -J -L -o /tmp/influxdb.deb \
         "https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUXDB}_${ARCH}.deb" \
     \
-    && CHRONOGRAF="1.7.9" \
+    && CHRONOGRAF="1.7.11" \
     && curl -J -L -o /tmp/chronograf.deb \
         "https://dl.influxdata.com/chronograf/releases/chronograf_${CHRONOGRAF}_${ARCH}.deb" \
     \
